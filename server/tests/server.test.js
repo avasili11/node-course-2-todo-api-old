@@ -157,42 +157,42 @@ describe('PATCH /todos/:id', () => {
 
         request(app)
             .patch(`/todos/${hexId}`)
+        //update text, set completed true
             .send({
                 completed: true,
                 text
             })
+            //200
             .expect(200)
+            //verify that response body has text property is changed, completed is true, completedAt is a number .toBeA
             .expect((res) => {
                 expect(res.body.todo.text).toBe(text);
                 expect(res.body.todo.completed).toBe(true);
                 expect(res.body.todo.completedAt).toBeA('number');
             })
             .end(done);
-        //update text, set completed true
-        //200
-        //erify that response body has text property is changed, completed is true, completedAt is a number .toBeA
     });
 
     it('should clear.completedAt when todo is not completed', (done) => {
+        //grab id of second todo item
         var hexId = todos[1]._id.toHexString();
         var text = 'This should be the new text!!!';
 
         request(app)
             .patch(`/todos/${hexId}`)
             .send({
+            //update text, set completed to false
                 completed: false,
                 text
             })
+             //200
             .expect(200)
             .expect((res) => {
+           //text is changed, completed is now false, completedAt is null - toNotExist
                 expect(res.body.todo.text).toBe(text);
                 expect(res.body.todo.completed).toBe(false);
                 expect(res.body.todo.completedAt).toNotExist();
             })
             .end(done);
-        //grab id of second todo item
-        //update text, set completed to false
-        //200
-        //text is changed, completed is now false, completedAt is null - toNotExist
     });
 });
