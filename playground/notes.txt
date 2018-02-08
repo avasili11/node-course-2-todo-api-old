@@ -1,0 +1,14 @@
+// for resource creations: '/todos'
+// for getting creations: GET /todos
+
+//crud operations - create, read, update and delete
+
+// Get /todos/1234324 
+
+//Valid id using isValid with 404
+    // 404 - send back empty send
+
+//model method - does not require individual document - example: User.findByToken method
+    //instance method - individual users - example can be user.generateAuthToken method
+
+//NODE_ENV
