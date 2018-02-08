@@ -116,6 +116,22 @@ if(!ObjectID.isValid(id)) {
     })
 });
 
+app.post('/users', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    var user = new User(body);
+
+    //model method - does not require individual document - example: User.findByToken method
+    //instance method - individual users - example can be user.generateAuthToken method
+
+    user.save().then((user) => {
+        return user.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token).send(user);  //x-auth header for specificying
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
